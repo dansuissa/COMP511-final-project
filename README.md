@@ -46,3 +46,9 @@ At a high level, the results suggest that:
 - highly novel or structurally unstable datasets create more room for a learned model to help
 - GraphMixer does not dominate uniformly, but follows a different operating profile from the heuristics
 - computational feasibility and scalability should be treated as part of model suitability, not as a separate implementation detail
+
+## Authors
+
+Christina Vuong
+Dan Suissa
+Yunjia Tian
