@@ -1,22 +1,22 @@
 # Temporal Graph Analytics for Sensitivity Analysis
 
-This repository contains the final report for a project on temporal graph learning and benchmark interpretability. The project studies why temporal link prediction performance varies so much across datasets, and whether measurable temporal graph properties can help explain those differences.
+This repository contains the final report and companion notebooks for a project on temporal graph learning and benchmark interpretability. The project studies why temporal link prediction performance varies so strongly across datasets, and whether measurable temporal graph properties can help explain those differences.
 
-The analysis focuses on single-relational temporal link prediction in the Temporal Graph Benchmark (TGB). Rather than running a broad model leaderboard, the project uses a smaller and more computationally feasible comparison between two training-free heuristic baselines, EdgeBank and BASE3, and one retained learned model, GraphMixer. The goal is to understand when simple memorization-based methods are sufficient and when a learned temporal model is more useful.
+Rather than treating benchmark results as isolated leaderboard numbers, the project takes a sensitivity-analysis perspective. It asks how dataset properties such as recurrence, novelty, edge repetition, activity, degree volatility, and node lifetime relate to downstream model behavior.
 
-## Project overview
+## Project summary
 
-Temporal graph models often behave very differently from one benchmark to another. A model that performs well on one dataset can perform much worse on another, even when the task looks similar. This project approaches that problem from a sensitivity-analysis perspective: instead of asking only which model wins, it asks which temporal graph characteristics are associated with that outcome.
+The study focuses on single-relational temporal link prediction in the Temporal Graph Benchmark (TGB). The retained comparison is intentionally narrow and computationally feasible. It centers on two training-free heuristic baselines, EdgeBank and BASE3, and one retained learned model, GraphMixer. Limited TGN and DyGFormer runs are kept only as auxiliary reference evidence where available.
 
-To do this, the project characterizes each dataset using descriptive temporal graph metrics and relates them to downstream predictive performance measured by test Mean Reciprocal Rank (MRR).
+The central goal is not to declare a universally best temporal graph model, but to understand when simple memorization-based heuristics are already sufficient and when a learned model provides a meaningful advantage.
 
 ## Main question
 
 How do temporal graph properties shape the relative performance of history-based heuristics versus learned temporal graph models across benchmark datasets?
 
-## Datasets
+## Retained datasets
 
-The main predictive study is built on a selected subset of TGB temporal link prediction datasets:
+The main predictive study is built around the following TGB datasets:
 
 - `tgbl-wiki`
 - `tgbl-review`
@@ -24,42 +24,25 @@ The main predictive study is built on a selected subset of TGB temporal link pre
 - `tgbl-uci`
 - `tgbl-lastfm`
 
-The dataset `tgbl-coin` is included mainly as a feasibility case to document large-scale computational limitations rather than as a full member of the main predictive comparison.
+In addition, `tgbl-coin` is included as a feasibility-focused case to document scale-related computational limitations rather than as part of the main predictive comparison.
 
 ## Models
 
-The retained comparison focuses on three main methods:
+The main retained comparison uses:
 
-- **EdgeBank**: a simple history-based baseline that predicts future links from previously observed edges
-- **BASE3**: a stronger training-free heuristic that combines recurrence, popularity, and temporal co-occurrence
-- **GraphMixer**: the retained learned model, used as a tractable neural contrast to memorization-based methods
+- **EdgeBank**, a pure history-based heuristic baseline
+- **BASE3**, a stronger training-free heuristic combining recurrence, popularity, and temporal co-occurrence
+- **GraphMixer**, the retained learned model and principal neural contrast
 
-Limited runs with **TGN** and **DyGFormer** are also kept in the report as auxiliary reference evidence where available.
+Auxiliary runs with **TGN** and **DyGFormer** are discussed in the report where available, but they are not treated as part of the main uniform comparison across all datasets.
 
-## Dataset characterization
+## What the project finds
 
-Each dataset is described using temporal graph statistics designed to capture different structural and temporal regimes, including:
+A main takeaway of the project is that benchmark outcomes become more interpretable when model performance is analyzed together with explicit temporal graph characterization.
 
-- surprise
-- recurrence
-- novelty
-- edge repeat rate
-- mean active node ratio
-- mean active edge density
-- degree volatility
-- node lifetime statistics
-
-These metrics are then compared with model performance using exploratory correlation analysis.
-
-## Main findings
-
-The main result of the project is that benchmark outcomes become much easier to interpret when model performance is studied together with explicit temporal graph structure.
-
-At a high level, the report finds that:
+At a high level, the results suggest that:
 
 - datasets with stronger historical repetition tend to favor memorization-based heuristics
 - highly novel or structurally unstable datasets create more room for a learned model to help
-- GraphMixer does not dominate uniformly, but shows a different operating profile from the heuristics
-- computational feasibility matters as much as raw predictive accuracy, especially on large temporal graphs
-
-A central takeaway is that model choice in temporal graph learning should depend not only on leaderboard results, but also on the temporal regime of the target dataset.
+- GraphMixer does not dominate uniformly, but follows a different operating profile from the heuristics
+- computational feasibility and scalability should be treated as part of model suitability, not as a separate implementation detail
